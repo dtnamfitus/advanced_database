@@ -1,21 +1,28 @@
-import { CreateProductDto, UpdateProductDto } from "../../application/dto/products.dto";
+import {
+  CreateProductDto,
+  UpdateProductDto,
+} from "../../application/dto/products.dto";
 import { ProductsModel } from "../../infrastructure/database/mysql/model/product.model";
 import { ProductsRepository } from "../../infrastructure/database/mysql/repository/products.repository";
 import { ProductEntity } from "../entities/product.entity";
 
-export interface IProductService {  
+export interface IProductService {
   createProduct(productData: CreateProductDto): Promise<ProductEntity>;
-  updateProduct(id: number, productData: UpdateProductDto): Promise<ProductEntity | null>;
-  updateProductStock(id: number, quantity: number): Promise<ProductEntity | null>;
+  updateProduct(
+    id: number,
+    productData: UpdateProductDto
+  ): Promise<ProductEntity | null>;
+  updateProductStock(
+    id: number,
+    quantity: number
+  ): Promise<ProductEntity | null>;
   deleteProduct(id: number): Promise<boolean>;
 }
 
 export class ProductService implements IProductService {
   private productsRepository = new ProductsRepository();
 
-  async createProduct(
-    productData: CreateProductDto
-  ): Promise<ProductsModel> {
+  async createProduct(productData: CreateProductDto): Promise<ProductsModel> {
     try {
       const product = await this.productsRepository.create(productData);
       return product;
