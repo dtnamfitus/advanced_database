@@ -56,18 +56,6 @@ services:
     volumes:
       - redis_data:/data
 
-  elastic:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
-    ports:
-      - "9200:9200"
-    environment:
-      - discovery.type=single-node
-      - xpack.security.enabled=true
-      - ELASTIC_USERNAME=elastic
-      - ELASTIC_PASSWORD=changeme
-    volumes:
-      - elastic_data:/usr/share/elasticsearch/data
-
   connect:
     image: debezium/connect:3.0.0.Final
     depends_on:
@@ -85,18 +73,44 @@ services:
       - VALUE_CONVERTER_SCHEMAS_ENABLE=false
     restart: always
 
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
 
-  scylla:
-    image: scylladb/scylla:latest
+  neo4j:
+    image: neo4j:5
+    container_name: neo4j
+    restart: always
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      NEO4J_AUTH: neo4j/Nam123456
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+
+  cassandra:
+    image: cassandra:4.1
+    container_name: cassandra
+    restart: always
     ports:
       - "9042:9042"
-      - "9160:9160"
     volumes:
-      - scylla_data:/var/lib/scylla
+      - cassandra_data:/var/lib/cassandra
+    environment:
+      - CASSANDRA_CLUSTER_NAME=dev-cluster
 
 volumes:
   mysql_data:
-  elastic_data:
-  scylla_data:
   redis_data:
   kafka_data:
+  mongodb_data:
+  neo4j_data:
+  neo4j_logs:
+  cassandra_data:
