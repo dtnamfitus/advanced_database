@@ -11,11 +11,7 @@ export class CartService {
     this.productRepository = new ProductsRepository();
   }
 
-  async addToCart(
-    userId: number,
-    productId: number,
-    quantity: number
-  ): Promise<CartsModel> {
+  async addToCart(userId: number, productId: number, quantity: number): Promise<CartsModel> {
     try {
       const product = await this.productRepository.findById(productId);
       if (!product) {
@@ -32,11 +28,6 @@ export class CartService {
       }
       return newCart;
     } catch (error) {
-      if (error instanceof Error) {
-        console.error("Error adding to cart:", error.message);
-      } else {
-        console.error("Unexpected error:", error);
-      }
       throw new Error("Failed to add to cart: " + error);
     }
   }
@@ -53,7 +44,7 @@ export class CartService {
       throw new Error("Failed to update cart: " + error);
     }
   }
-
+  
   async removeFromCart(cartId: number): Promise<boolean> {
     try {
       const cart = await this.cartRepository.findById(cartId);
@@ -66,4 +57,5 @@ export class CartService {
       throw new Error("Failed to remove from cart: " + error);
     }
   }
+  
 }

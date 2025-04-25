@@ -4,8 +4,6 @@ import {
   CreateProductHandler,
   DeleteProductCommand,
   DeleteProductHandler,
-  GetProductsCommand,
-  GetProductsHandler,
   UpdateProductCommand,
   UpdateProductHandler,
   UpdateStockCommand,
@@ -35,7 +33,6 @@ export class ProductsController {
       "DeleteProductCommand",
       new DeleteProductHandler()
     );
-    this.commandBus.register("GetProductsCommand", new GetProductsHandler());
   }
 
   async create(req: Request, res: Response): Promise<void> {
@@ -133,29 +130,6 @@ export class ProductsController {
       res.status(400).json({
         success: false,
         message: error.message || "Failed to delete product",
-      });
-    }
-  }
-
-  async getProducts(req: Request, res: Response): Promise<void> {
-    try {
-      const { page, limit, filters, sort } = req.query;
-      const command = new GetProductsCommand(
-        parseInt(page as string),
-        parseInt(limit as string),
-        filters as Record<string, any>,
-        sort as Record<string, 1 | -1 | "asc" | "desc">
-      );
-      const products = await this.commandBus.execute(command);
-      res.status(200).json({
-        success: true,
-        data: products,
-        message: "Products fetched successfully",
-      });
-    } catch (error: any) {
-      res.status(400).json({
-        success: false,
-        message: error.message || "Failed to fetch products",
       });
     }
   }
