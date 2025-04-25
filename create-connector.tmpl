@@ -1,69 +1,192 @@
 curl --location 'http://localhost:8083/connectors' \
 --header 'Content-Type: application/json' \
 --data '{
-  "name": "mysql-products-connector",
-  "config": {
-    "connector.class": "io.debezium.connector.mysql.MySqlConnector",
-    "tasks.max": "1",
-    "database.hostname": "mysql",
-    "database.port": "3306",
-    "database.user": "root",
-    "database.password": "root",
-    "database.server.id": "184054",
-    "database.server.name": "product_database",
-    "database.include.list": "shoppee",
-    "table.include.list": "shoppee.products",
-    "database.history.kafka.bootstrap.servers": "kafka:29092",
-    "database.history.kafka.topic": "dbhistory.products",
-    "schema.history.internal.kafka.topic": "schemahistory.products",
-    "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
-    "include.schema.changes": "false",
-    "topic.prefix": "mckay",
-    "database.parse_time": "true",
-    "database.charset": "utf8mb4",
-    "database.serverTimezone": "UTC",
-    "max_idle_conns": "10",
-    "max_open_conns": "100",
-    "max_lifetime": "3600"
-  }
-}
-'
+    "name": "mysql-products-connector",
+    "config": {
+      "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+      "tasks.max": "1",
+      "database.hostname": "mysql",
+      "database.port": "3306",
+      "database.user": "root",
+      "database.password": "root",
+      "database.server.id": "184054",
+      "database.server.name": "product_database",
+      "database.include.list": "shoppee",
+      "table.include.list": "shoppee.products",
+      "snapshot.mode": "initial",
+      "snapshot.locking.mode": "none",
+      "database.history.kafka.bootstrap.servers": "kafka:29092",
+      "database.history.kafka.topic": "dbhistory.products",
+      "schema.history.internal.kafka.topic": "schemahistory.products",
+      "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
+      "include.schema.changes": "false",
+      "topic.prefix": "mckay",
+      "consumer.auto.offset.reset": "earliest",
+      "consumer.enable.auto.commit": "false",
+      "consumer.auto.commit.interval.ms": "1000",
+      "consumer.max.poll.records": "500",
+      "consumer.session.timeout.ms": "30000",
+      "database.parse_time": "true",
+      "database.charset": "utf8mb4",
+      "database.serverTimezone": "UTC",
+      "max_idle_conns": "10",
+      "max_open_conns": "100",
+      "max_lifetime": "3600"
+    }
+  }'
 
 curl --location 'http://localhost:8083/connectors' \
 --header 'Content-Type: application/json' \
 --data '{
-  "name": "mysql-carts-connector",
-  "config": {
-    "connector.class": "io.debezium.connector.mysql.MySqlConnector",
-    "tasks.max": "1",
-    "database.hostname": "mysql",
-    "database.port": "3306",
-    "database.user": "root",
-    "database.password": "root",
-    "database.server.id": "184054",
-    "database.server.name": "product_database",
-    "database.include.list": "shoppee",
-    "table.include.list": "shoppee.carts",
-    "database.history.kafka.bootstrap.servers": "kafka:29092",
-    "database.history.kafka.topic": "dbhistory.carts",
-    "schema.history.internal.kafka.topic": "schemahistory.carts",
-    "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
-    "include.schema.changes": "false",
-    "topic.prefix": "mckay",
-    "database.parse_time": "true",
-    "database.charset": "utf8mb4",
-    "database.serverTimezone": "UTC",
-    "max_idle_conns": "10",
-    "max_open_conns": "100",
-    "max_lifetime": "3600"
-  }
-}
-'
+    "name": "mysql-carts-connector",
+    "config": {
+      "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+      "tasks.max": "1",
+      "database.hostname": "mysql",
+      "database.port": "3306",
+      "database.user": "root",
+      "database.password": "root",
+      "database.server.id": "184054",
+      "database.server.name": "cart_database",
+      "database.include.list": "shoppee",
+      "table.include.list": "shoppee.carts",
+      "snapshot.mode": "initial",
+      "snapshot.locking.mode": "none",
+      "database.history.kafka.bootstrap.servers": "kafka:29092",
+      "database.history.kafka.topic": "dbhistory.carts",
+      "schema.history.internal.kafka.topic": "schemahistory.carts",
+      "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
+      "include.schema.changes": "false",
+      "topic.prefix": "mckay",
+      "consumer.auto.offset.reset": "earliest",
+      "consumer.enable.auto.commit": "false",
+      "consumer.auto.commit.interval.ms": "1000",
+      "consumer.max.poll.records": "500",
+      "consumer.session.timeout.ms": "30000",
+      "database.parse_time": "true",
+      "database.charset": "utf8mb4",
+      "database.serverTimezone": "UTC",
+      "max_idle_conns": "10",
+      "max_open_conns": "100",
+      "max_lifetime": "3600"
+    }
+  }'
 
 curl --location 'http://localhost:8083/connectors' \
 --header 'Content-Type: application/json' \
 --data '{
-  "name": "mysql-reviews-connector",
+    "name": "mysql-reviews-connector",
+    "config": {
+      "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+      "tasks.max": "1",
+      "database.hostname": "mysql",
+      "database.port": "3306",
+      "database.user": "root",
+      "database.password": "root",
+      "database.server.id": "184054",
+      "database.server.name": "review_database",
+      "database.include.list": "shoppee",
+      "table.include.list": "shoppee.reviews",
+      "snapshot.mode": "initial",
+      "snapshot.locking.mode": "none",
+      "database.history.kafka.bootstrap.servers": "kafka:29092",
+      "database.history.kafka.topic": "dbhistory.reviews",
+      "schema.history.internal.kafka.topic": "schemahistory.reviews",
+      "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
+      "include.schema.changes": "false",
+      "topic.prefix": "mckay",
+      "consumer.auto.offset.reset": "earliest",
+      "consumer.enable.auto.commit": "false",
+      "consumer.auto.commit.interval.ms": "1000",
+      "consumer.max.poll.records": "500",
+      "consumer.session.timeout.ms": "30000",
+      "database.parse_time": "true",
+      "database.charset": "utf8mb4",
+      "database.serverTimezone": "UTC",
+      "max_idle_conns": "10",
+      "max_open_conns": "100",
+      "max_lifetime": "3600"
+    }
+  }'
+
+curl --location 'http://localhost:8083/connectors' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "mysql-orders-connector",
+    "config": {
+      "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+      "tasks.max": "1",
+      "database.hostname": "mysql",
+      "database.port": "3306",
+      "database.user": "root",
+      "database.password": "root",
+      "database.server.id": "184054",
+      "database.server.name": "order_database",
+      "database.include.list": "shoppee",
+      "table.include.list": "shoppee.orders",
+      "snapshot.mode": "initial",
+      "snapshot.locking.mode": "none",
+      "database.history.kafka.bootstrap.servers": "kafka:29092",
+      "database.history.kafka.topic": "dbhistory.orders",
+      "schema.history.internal.kafka.topic": "schemahistory.orders",
+      "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
+      "include.schema.changes": "false",
+      "topic.prefix": "mckay",
+      "consumer.auto.offset.reset": "earliest",
+      "consumer.enable.auto.commit": "false",
+      "consumer.auto.commit.interval.ms": "1000",
+      "consumer.max.poll.records": "500",
+      "consumer.session.timeout.ms": "30000",
+      "database.parse_time": "true",
+      "database.charset": "utf8mb4",
+      "database.serverTimezone": "UTC",
+      "max_idle_conns": "10",
+      "max_open_conns": "100",
+      "max_lifetime": "3600"
+    }
+  }'
+
+curl --location 'http://localhost:8083/connectors' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "mysql-order-items-connector",
+    "config": {
+      "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+      "tasks.max": "1",
+      "database.hostname": "mysql",
+      "database.port": "3306",
+      "database.user": "root",
+      "database.password": "root",
+      "database.server.id": "184054",
+      "database.server.name": "order_items_database",
+      "database.include.list": "shoppee",
+      "table.include.list": "shoppee.order_items",
+      "snapshot.mode": "initial",
+      "snapshot.locking.mode": "none",
+      "database.history.kafka.bootstrap.servers": "kafka:29092",
+      "database.history.kafka.topic": "dbhistory.order_items",
+      "schema.history.internal.kafka.topic": "schemahistory.order_items",
+      "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
+      "include.schema.changes": "false",
+      "topic.prefix": "mckay",
+      "consumer.auto.offset.reset": "earliest",
+      "consumer.enable.auto.commit": "false",
+      "consumer.auto.commit.interval.ms": "1000",
+      "consumer.max.poll.records": "500",
+      "consumer.session.timeout.ms": "30000",
+      "database.parse_time": "true",
+      "database.charset": "utf8mb4",
+      "database.serverTimezone": "UTC",
+      "max_idle_conns": "10",
+      "max_open_conns": "100",
+      "max_lifetime": "3600"
+    }
+  }'
+
+curl --location 'http://localhost:8083/connectors' \
+--header 'Content-Type: application/json' \
+--data '{
+  "name": "mysql-order-items-connector",
   "config": {
     "connector.class": "io.debezium.connector.mysql.MySqlConnector",
     "tasks.max": "1",
@@ -74,10 +197,10 @@ curl --location 'http://localhost:8083/connectors' \
     "database.server.id": "184054",
     "database.server.name": "product_database",
     "database.include.list": "shoppee",
-    "table.include.list": "shoppee.reviews",
+    "table.include.list": "shoppee.order_items",
     "database.history.kafka.bootstrap.servers": "kafka:29092",
-    "database.history.kafka.topic": "dbhistory.reviews",
-    "schema.history.internal.kafka.topic": "schemahistory.reviews",
+    "database.history.kafka.topic": "dbhistory.order_items",
+    "schema.history.internal.kafka.topic": "schemahistory.order_items",
     "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
     "include.schema.changes": "false",
     "topic.prefix": "mckay",

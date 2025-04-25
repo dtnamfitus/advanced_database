@@ -23,7 +23,7 @@ export class OrderService {
   async createOrder(user_id: number): Promise<any> {
     try {
       const carts = await this.cartRedisService.getCart(user_id);
-      if (!carts) {
+      if (!carts || carts.length === 0) {
         throw new Error("Cart not found for user: " + user_id);
       }
       const productIds = carts.map((item: CartRedisModel) => item.product_id);

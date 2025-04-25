@@ -114,6 +114,7 @@ export class KafkaConsumer implements IMessageConsumer {
             );
           }
         },
+        autoCommit: false,
       });
       console.log("Kafka consumer is now running and processing messages.");
     } catch (error) {

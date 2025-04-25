@@ -1,0 +1,402 @@
+[
+    {
+        "shop_name": "Hydro Flask Store #1",
+        "owner_id": 85
+    },
+    {
+        "shop_name": "Jordan Store #2",
+        "owner_id": 50
+    },
+    {
+        "shop_name": "Vans Store #3",
+        "owner_id": 13
+    },
+    {
+        "shop_name": "ASICS Store #4",
+        "owner_id": 27
+    },
+    {
+        "shop_name": "Louis Vuitton Store #5",
+        "owner_id": 95
+    },
+    {
+        "shop_name": "Jordan Store #6",
+        "owner_id": 67
+    },
+    {
+        "shop_name": "Coach Store #7",
+        "owner_id": 18
+    },
+    {
+        "shop_name": "Rolex Store #8",
+        "owner_id": 23
+    },
+    {
+        "shop_name": "Miir Store #9",
+        "owner_id": 1
+    },
+    {
+        "shop_name": "Armani Store #10",
+        "owner_id": 99
+    },
+    {
+        "shop_name": "Yeti Store #11",
+        "owner_id": 38
+    },
+    {
+        "shop_name": "North Face Store #12",
+        "owner_id": 78
+    },
+    {
+        "shop_name": "New Era Store #13",
+        "owner_id": 30
+    },
+    {
+        "shop_name": "Samsonite Store #14",
+        "owner_id": 51
+    },
+    {
+        "shop_name": "Longines Store #15",
+        "owner_id": 87
+    },
+    {
+        "shop_name": "Swatch Store #16",
+        "owner_id": 51
+    },
+    {
+        "shop_name": "Uniqlo Store #17",
+        "owner_id": 87
+    },
+    {
+        "shop_name": "Pureit Store #18",
+        "owner_id": 71
+    },
+    {
+        "shop_name": "Oppo Store #19",
+        "owner_id": 74
+    },
+    {
+        "shop_name": "Kate Spade Store #20",
+        "owner_id": 88
+    },
+    {
+        "shop_name": "Uniqlo Store #21",
+        "owner_id": 39
+    },
+    {
+        "shop_name": "Versace Store #22",
+        "owner_id": 98
+    },
+    {
+        "shop_name": "Lacoste Store #23",
+        "owner_id": 12
+    },
+    {
+        "shop_name": "Calvin Klein Store #24",
+        "owner_id": 11
+    },
+    {
+        "shop_name": "Diesel Store #25",
+        "owner_id": 14
+    },
+    {
+        "shop_name": "Timberland Store #26",
+        "owner_id": 53
+    },
+    {
+        "shop_name": "Versace Store #27",
+        "owner_id": 11
+    },
+    {
+        "shop_name": "Apple Store #28",
+        "owner_id": 4
+    },
+    {
+        "shop_name": "Superdry Store #29",
+        "owner_id": 43
+    },
+    {
+        "shop_name": "Samsonite Store #30",
+        "owner_id": 43
+    },
+    {
+        "shop_name": "Steve Madden Store #31",
+        "owner_id": 84
+    },
+    {
+        "shop_name": "Hollister Store #32",
+        "owner_id": 81
+    },
+    {
+        "shop_name": "Ray-Ban Store #33",
+        "owner_id": 72
+    },
+    {
+        "shop_name": "Vivo Store #34",
+        "owner_id": 73
+    },
+    {
+        "shop_name": "Sony Store #35",
+        "owner_id": 74
+    },
+    {
+        "shop_name": "GAP Store #36",
+        "owner_id": 58
+    },
+    {
+        "shop_name": "Dr. Martens Store #37",
+        "owner_id": 49
+    },
+    {
+        "shop_name": "Fila Store #38",
+        "owner_id": 5
+    },
+    {
+        "shop_name": "Hermès Store #39",
+        "owner_id": 97
+    },
+    {
+        "shop_name": "Adidas Store #40",
+        "owner_id": 27
+    },
+    {
+        "shop_name": "Levi's Store #41",
+        "owner_id": 13
+    },
+    {
+        "shop_name": "Balenciaga Store #42",
+        "owner_id": 70
+    },
+    {
+        "shop_name": "S'well Store #43",
+        "owner_id": 50
+    },
+    {
+        "shop_name": "Reebok Store #44",
+        "owner_id": 12
+    },
+    {
+        "shop_name": "Columbia Store #45",
+        "owner_id": 67
+    },
+    {
+        "shop_name": "Kate Spade Store #46",
+        "owner_id": 59
+    },
+    {
+        "shop_name": "Montblanc Store #47",
+        "owner_id": 5
+    },
+    {
+        "shop_name": "Balenciaga Store #48",
+        "owner_id": 41
+    },
+    {
+        "shop_name": "H&M Store #49",
+        "owner_id": 57
+    },
+    {
+        "shop_name": "Coach Store #50",
+        "owner_id": 15
+    },
+    {
+        "shop_name": "Samsung Store #51",
+        "owner_id": 93
+    },
+    {
+        "shop_name": "Skechers Store #52",
+        "owner_id": 46
+    },
+    {
+        "shop_name": "Vans Store #53",
+        "owner_id": 15
+    },
+    {
+        "shop_name": "Tory Burch Store #54",
+        "owner_id": 98
+    },
+    {
+        "shop_name": "Realme Store #55",
+        "owner_id": 18
+    },
+    {
+        "shop_name": "Lululemon Store #56",
+        "owner_id": 24
+    },
+    {
+        "shop_name": "Ray-Ban Store #57",
+        "owner_id": 80
+    },
+    {
+        "shop_name": "Polo Ralph Lauren Store #58",
+        "owner_id": 86
+    },
+    {
+        "shop_name": "Hollister Store #59",
+        "owner_id": 29
+    },
+    {
+        "shop_name": "Tory Burch Store #60",
+        "owner_id": 69
+    },
+    {
+        "shop_name": "Rolex Store #61",
+        "owner_id": 63
+    },
+    {
+        "shop_name": "Timberland Store #62",
+        "owner_id": 63
+    },
+    {
+        "shop_name": "DC Shoes Store #63",
+        "owner_id": 25
+    },
+    {
+        "shop_name": "Birkenstock Store #64",
+        "owner_id": 90
+    },
+    {
+        "shop_name": "Under Armour Store #65",
+        "owner_id": 43
+    },
+    {
+        "shop_name": "DC Shoes Store #66",
+        "owner_id": 8
+    },
+    {
+        "shop_name": "Longines Store #67",
+        "owner_id": 56
+    },
+    {
+        "shop_name": "Burberry Store #68",
+        "owner_id": 41
+    },
+    {
+        "shop_name": "Moncler Store #69",
+        "owner_id": 81
+    },
+    {
+        "shop_name": "Quiksilver Store #70",
+        "owner_id": 25
+    },
+    {
+        "shop_name": "North Face Store #71",
+        "owner_id": 83
+    },
+    {
+        "shop_name": "Gucci Store #72",
+        "owner_id": 96
+    },
+    {
+        "shop_name": "Dior Store #73",
+        "owner_id": 96
+    },
+    {
+        "shop_name": "Samsonite Store #74",
+        "owner_id": 44
+    },
+    {
+        "shop_name": "Rolex Store #75",
+        "owner_id": 34
+    },
+    {
+        "shop_name": "Michael Kors Store #76",
+        "owner_id": 37
+    },
+    {
+        "shop_name": "TUMI Store #77",
+        "owner_id": 33
+    },
+    {
+        "shop_name": "Prada Store #78",
+        "owner_id": 21
+    },
+    {
+        "shop_name": "TUMI Store #79",
+        "owner_id": 2
+    },
+    {
+        "shop_name": "Prada Store #80",
+        "owner_id": 84
+    },
+    {
+        "shop_name": "Yeti Store #81",
+        "owner_id": 70
+    },
+    {
+        "shop_name": "Versace Store #82",
+        "owner_id": 94
+    },
+    {
+        "shop_name": "Superdry Store #83",
+        "owner_id": 90
+    },
+    {
+        "shop_name": "Sony Store #84",
+        "owner_id": 70
+    },
+    {
+        "shop_name": "Oakley Store #85",
+        "owner_id": 50
+    },
+    {
+        "shop_name": "Fossil Store #86",
+        "owner_id": 57
+    },
+    {
+        "shop_name": "Benetton Store #87",
+        "owner_id": 56
+    },
+    {
+        "shop_name": "Dockers Store #88",
+        "owner_id": 86
+    },
+    {
+        "shop_name": "Tag Heuer Store #89",
+        "owner_id": 70
+    },
+    {
+        "shop_name": "Crocs Store #90",
+        "owner_id": 9
+    },
+    {
+        "shop_name": "Superdry Store #91",
+        "owner_id": 79
+    },
+    {
+        "shop_name": "Chanel Store #92",
+        "owner_id": 5
+    },
+    {
+        "shop_name": "Supreme Store #93",
+        "owner_id": 64
+    },
+    {
+        "shop_name": "Chanel Store #94",
+        "owner_id": 43
+    },
+    {
+        "shop_name": "Xiaomi Store #95",
+        "owner_id": 30
+    },
+    {
+        "shop_name": "Steve Madden Store #96",
+        "owner_id": 66
+    },
+    {
+        "shop_name": "Louis Vuitton Store #97",
+        "owner_id": 56
+    },
+    {
+        "shop_name": "Hollister Store #98",
+        "owner_id": 4
+    },
+    {
+        "shop_name": "Sony Store #99",
+        "owner_id": 39
+    },
+    {
+        "shop_name": "Bershka Store #100",
+        "owner_id": 76
+    }
+]

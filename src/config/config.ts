@@ -60,5 +60,7 @@ export const config = {
     cdc_products: process.env.CDC_PRODUCT_TOPIC || "",
     cdc_carts: process.env.CDC_CART_TOPIC || "",
     cdc_reviews: process.env.CDC_REVIEW_TOPIC || "",
+    cdc_orders: process.env.CDC_ORDER_TOPIC || "",
+    cdc_order_items: process.env.CDC_ORDER_ITEM_TOPIC || "",
   },
 };

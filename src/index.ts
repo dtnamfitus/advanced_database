@@ -22,16 +22,20 @@ import productsRouter from "./application/router/products.router";
 import userRouter from "./application/router/users.router";
 import cartRouter from "./application/router/cart.router";
 import reviewRouter from "./application/router/review.router";
+import orderRouter from "./application/router/order.router";
 
 app.use("/products", productsRouter);
 app.use("/user", userRouter);
 app.use("/cart", cartRouter);
 app.use("/review", reviewRouter);
+app.use("/order", orderRouter);
 
 const topicsToConsume = [
   config.cdc_topic.cdc_products,
   config.cdc_topic.cdc_carts,
   config.cdc_topic.cdc_reviews,
+  config.cdc_topic.cdc_orders,
+  config.cdc_topic.cdc_order_items,
 ];
 const kafkaConsumer: IMessageConsumer = new KafkaConsumer(
   "local",
@@ -39,7 +43,6 @@ const kafkaConsumer: IMessageConsumer = new KafkaConsumer(
 );
 const kafkaProcessor: IMessageProcessor = new MessageProcessorService();
 
-// Initialize MongoDB connection before starting server
 mongoConnection
   .connect()
   .then(() => {

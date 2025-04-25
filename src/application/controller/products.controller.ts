@@ -4,6 +4,8 @@ import {
   CreateProductHandler,
   DeleteProductCommand,
   DeleteProductHandler,
+  GetProductCommand,
+  GetProductHandler,
   UpdateProductCommand,
   UpdateProductHandler,
   UpdateStockCommand,
@@ -33,6 +35,7 @@ export class ProductsController {
       "DeleteProductCommand",
       new DeleteProductHandler()
     );
+    this.commandBus.register("GetProductCommand", new GetProductHandler());
   }
 
   async create(req: Request, res: Response): Promise<void> {
@@ -130,6 +133,27 @@ export class ProductsController {
       res.status(400).json({
         success: false,
         message: error.message || "Failed to delete product",
+      });
+    }
+  }
+
+  async get(req: Request, res: Response): Promise<void> {
+    try {
+      const command = new GetProductCommand(
+        req.query.page ? parseInt(req.query.page as string) : 1,
+        req.query.limit ? parseInt(req.query.limit as string) : 10,
+        req.query.sort ? JSON.parse(req.query.sort as string) : { id: -1 }
+      );
+      const products = await this.commandBus.execute(command);
+      res.status(200).json({
+        success: true,
+        data: products,
+        message: "Products retrieved successfully",
+      });
+    } catch (error: any) {
+      res.status(400).json({
+        success: false,
+        message: error.message || "Failed to retrieve products",
       });
     }
   }

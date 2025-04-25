@@ -10,5 +10,6 @@ router.patch("/:id/stock", (req, res) =>
   productsController.updateStock(req, res)
 );
 router.delete("/:id", (req, res) => productsController.delete(req, res));
+router.get("/", (req, res) => productsController.get(req, res));
 
 export default router;
