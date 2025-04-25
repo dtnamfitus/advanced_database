@@ -26,7 +26,7 @@ export class KafkaConsumer implements IMessageConsumer {
       maxBytes: 5 * 1024 * 1024,
       maxWaitTimeInMs: 50,
       allowAutoTopicCreation: false,
-      maxInFlightRequests: 1,
+      maxInFlightRequests: 5,
       readUncommitted: false,
     });
   }
