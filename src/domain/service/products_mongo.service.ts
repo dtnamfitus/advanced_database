@@ -1,3 +1,4 @@
+import { IProduct } from "../../infrastructure/database/mongo/model/product.model";
 import { ProductMongoRepository } from "../../infrastructure/database/mongo/repository/product.repository";
 import { ProductEvent } from "../../infrastructure/kafka/payload/products.payload";
 
@@ -12,7 +13,7 @@ export interface IProductMongoService {
 }
 
 export class ProductMongoService implements IProductMongoService {
-  private productMongoRepository: ProductMongoRepository;
+  private readonly productMongoRepository: ProductMongoRepository;
 
   constructor() {
     this.productMongoRepository = new ProductMongoRepository();
@@ -82,6 +83,16 @@ export class ProductMongoService implements IProductMongoService {
       return products;
     } catch (error) {
       console.error("Error fetching products:", error);
+      throw error;
+    }
+  }
+
+  public async GetProductByIds(ids: number[]): Promise<IProduct[]> {
+    try {
+      const product = await this.productMongoRepository.getProductsByIds(ids);
+      return product;
+    } catch (error) {
+      console.error("Error fetching product by ID:", error);
       throw error;
     }
   }

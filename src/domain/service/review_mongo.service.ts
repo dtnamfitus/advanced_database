@@ -32,15 +32,20 @@ export class ReviewMongoService {
     try {
       switch (parsedMessage.op) {
         case "c":
-          await this.reviewMongoRepository.upsert({
+          const review = await this.reviewMongoRepository.upsert({
             review_id: parsedMessage.after.id,
-            product_id: parsedMessage.after.id,
+            product_id: parsedMessage.after.product_id,
             user_id: parsedMessage.after.user_id,
             rating: parsedMessage.after.rating,
             comment: parsedMessage.after.comment?.toString() ?? "",
             created_at: new Date(parsedMessage.after.created_at),
             updated_at: new Date(parsedMessage.after.updated_at),
           });
+          if (!review) {
+            console.warn("Review not found:", parsedMessage.after.id);
+            return;
+          }
+          console.log("Creating product with ID:", parsedMessage.after.id);
           break;
         case "u":
           await this.reviewMongoRepository.upsert({

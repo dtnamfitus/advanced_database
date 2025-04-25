@@ -74,7 +74,7 @@ export class CartRedisService {
     }
   }
 
-  async getCart(userId: number): Promise<any[]> {
+  async getCart(userId: number): Promise<CartRedisModel[]> {
     try {
       return await this.cartRedisRepository.getCart(userId);
     } catch (error) {

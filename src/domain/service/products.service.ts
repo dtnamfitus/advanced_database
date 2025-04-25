@@ -19,7 +19,7 @@ export interface IProductService {
 }
 
 export class ProductService implements IProductService {
-  private productsRepository = new ProductsRepository();
+  private readonly productsRepository = new ProductsRepository();
 
   async createProduct(productData: CreateProductDto): Promise<ProductsModel> {
     try {

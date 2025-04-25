@@ -1,7 +1,7 @@
 import { ReviewRepository } from "../../infrastructure/database/mysql/repository/review.repository";
 
 export class ReviewService {
-  private reviewsRepository = new ReviewRepository();
+  private readonly reviewsRepository = new ReviewRepository();
 
   async createReview(reviewData: {
     user_id: number;

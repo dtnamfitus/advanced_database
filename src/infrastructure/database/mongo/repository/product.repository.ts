@@ -97,6 +97,10 @@ export class ProductMongoRepository implements IProductRepository {
     return await ProductModel.findById(id).lean();
   }
 
+  async getProductsByIds(id: number[]): Promise<IProduct[]> {
+    return await ProductModel.find({ product_id: { $in: id } }).lean();
+  }
+
   async upsertProduct(
     product: IProduct,
     options: { upsert: boolean } = { upsert: true }
