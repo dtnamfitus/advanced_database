@@ -1,5 +1,4 @@
 import { ProductService } from "../../domain/service/products.service";
-import { ProductMongoService } from "../../domain/service/products_mongo.service";
 import { ICommand, ICommandHandler } from "./command_bus";
 
 export class CreateProductCommand implements ICommand {
@@ -53,29 +52,5 @@ export class DeleteProductHandler
 
   async execute(command: DeleteProductCommand): Promise<any> {
     return this.productService.deleteProduct(command.id);
-  }
-}
-
-export class GetProductsCommand implements ICommand {
-  constructor(
-    public readonly page: number,
-    public readonly limit: number,
-    public readonly filters: Record<string, any>,
-    public readonly sort: Record<string, 1 | -1 | "asc" | "desc">
-  ) {}
-}
-
-export class GetProductsHandler
-  implements ICommandHandler<GetProductsCommand>
-{
-  private productMongoService = new ProductMongoService();
-
-  async execute(command: GetProductsCommand): Promise<any> {
-    return this.productMongoService.GetProducts(
-      command.page,
-      command.limit,
-      command.filters,
-      command.sort
-    );
   }
 }
