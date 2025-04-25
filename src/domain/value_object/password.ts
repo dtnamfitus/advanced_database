@@ -11,11 +11,11 @@ export class Password {
     return this.value;
   }
 
-  public static hash(password: string): string {
-    return crypto.createHash("sha256").update(password).digest("hex");
+  public hash(): string {
+    return crypto.createHash("sha256").update(this.value).digest("hex");
   }
 
-  public static verify(password: string, hashedPassword: string): boolean {
-    return this.hash(password) === hashedPassword;
+  public verify(hashedPassword: string): boolean {
+    return this.hash() === hashedPassword;
   }
 }

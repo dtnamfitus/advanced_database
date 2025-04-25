@@ -4,18 +4,17 @@ import {
 } from "../../application/dto/products.dto";
 import { ProductsModel } from "../../infrastructure/database/mysql/model/product.model";
 import { ProductsRepository } from "../../infrastructure/database/mysql/repository/products.repository";
-import { ProductEntity } from "../entities/product.entity";
 
 export interface IProductService {
-  createProduct(productData: CreateProductDto): Promise<ProductEntity>;
+  createProduct(productData: CreateProductDto): Promise<ProductsModel>;
   updateProduct(
     id: number,
     productData: UpdateProductDto
-  ): Promise<ProductEntity | null>;
+  ): Promise<ProductsModel | null>;
   updateProductStock(
     id: number,
     quantity: number
-  ): Promise<ProductEntity | null>;
+  ): Promise<ProductsModel | null>;
   deleteProduct(id: number): Promise<boolean>;
 }
 

@@ -40,13 +40,20 @@ export class UsersRepository implements IUsersRepository {
     return this.repository.save(newUser);
   }
 
-  async update(id: number, userData: Partial<UsersModel>): Promise<UsersModel | null> {
+  async update(
+    id: number,
+    userData: Partial<UsersModel>
+  ): Promise<UsersModel | null> {
     await this.repository.update(id, userData);
     return this.findById(id);
   }
 
   async delete(id: number): Promise<boolean> {
     const result = await this.repository.delete(id);
-    return result?.affected !== undefined && result.affected !== null && result.affected > 0;
+    return (
+      result?.affected !== undefined &&
+      result.affected !== null &&
+      result.affected > 0
+    );
   }
-} 
+}

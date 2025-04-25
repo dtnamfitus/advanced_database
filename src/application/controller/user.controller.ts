@@ -14,14 +14,8 @@ export class UserController {
   }
 
   private registerHandlers(): void {
-    this.commandBus.register(
-      "CreateUserCommand",
-      new CreateUserHandler()
-    );
-    this.commandBus.register(
-      "LoginCommand",
-      new LoginHandler()
-    );
+    this.commandBus.register("CreateUserCommand", new CreateUserHandler());
+    this.commandBus.register("LoginCommand", new LoginHandler());
   }
 
   async createUser(req: Request, res: Response): Promise<void> {

@@ -11,6 +11,8 @@ import { WalletTransactionsModel } from "./model/transaction.model";
 import { WalletsModel } from "./model/wallet.model";
 import { UsersModel } from "./model/users.model";
 import { UserTiersModel } from "./model/user_tiers.model";
+import { CartsModel } from "./model/cart.model";
+import { ReviewsModel } from "./model/review.model";
 
 async function ensureDatabaseExists() {
   const connection = await mysql.createConnection({
@@ -20,7 +22,9 @@ async function ensureDatabaseExists() {
     password: config.mysql.password,
   });
 
-  await connection.query(`CREATE DATABASE IF NOT EXISTS \`${config.mysql.database}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
+  await connection.query(
+    `CREATE DATABASE IF NOT EXISTS \`${config.mysql.database}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`
+  );
   await connection.end();
 }
 
@@ -36,7 +40,20 @@ export const AppDataSource = new DataSource({
   charset: config.mysql.charset,
   timezone: config.mysql.timezone,
   maxQueryExecutionTime: 1000,
-  entities: [CustomerTiersModel, ProductsModel, OrderItemsModel, OrdersModel, ShopsModel, WalletTransactionsModel, WalletsModel, UsersModel, UserTiersModel, WalletsModel],
+  entities: [
+    CustomerTiersModel,
+    ProductsModel,
+    OrderItemsModel,
+    OrdersModel,
+    ShopsModel,
+    WalletTransactionsModel,
+    WalletsModel,
+    UsersModel,
+    UserTiersModel,
+    WalletsModel,
+    CartsModel,
+    ReviewsModel,
+  ],
 });
 
 ensureDatabaseExists()

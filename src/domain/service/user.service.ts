@@ -2,7 +2,7 @@ import { config } from "../../config/config";
 import { UsersModel } from "../../infrastructure/database/mysql/model/users.model";
 import { UsersRepository } from "../../infrastructure/database/mysql/repository/users.repository";
 import { Password } from "../value_object/password";
-import * as jwt from 'jsonwebtoken';
+import * as jwt from "jsonwebtoken";
 
 export interface TokenResponse {
   accessToken: string;
@@ -19,8 +19,14 @@ export class UserService implements IUserService {
 
   async createUser(userData: any): Promise<UsersModel> {
     try {
-      const user = await this.userRepository.create(userData);
-      return user;
+      const password = new Password(userData.password);
+
+      const user = await this.userRepository.create({
+        password_hash: password.hash(),
+        ...userData,
+      });
+      const userDataWithoutPassword = { ...user, password_hash: "" };
+      return userDataWithoutPassword;
     } catch (error) {
       throw new Error("Failed to create user: " + error);
     }
@@ -30,19 +36,16 @@ export class UserService implements IUserService {
     const payload = {
       id: user.id,
       username: user.username,
-      email: user.email
+      email: user.email,
     };
-    
-    const accessToken = jwt.sign(
-      payload,
-      config.jwt.accessSecret,
-      { expiresIn: config.jwt.accessExpiration }
-    );
-    
-    
+
+    const accessToken = jwt.sign(payload, config.jwt.accessSecret, {
+      expiresIn: config.jwt.accessExpiration,
+    });
+
     return {
       accessToken,
-      expiresIn: config.jwt.accessExpiration
+      expiresIn: config.jwt.accessExpiration,
     };
   }
 
@@ -53,7 +56,8 @@ export class UserService implements IUserService {
         throw new Error("User not found");
       }
       const password = new Password(userData.password);
-      if (!Password.verify(userData.password, user.password_hash)) {
+      console.log(user.password_hash, password.hash());
+      if (user.password_hash !== password.hash()) {
         throw new Error("Invalid password");
       }
       return this.generateTokens(user);
