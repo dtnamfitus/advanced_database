@@ -1,5 +1,4 @@
 import { CartService } from "../../domain/service/cart.service";
-import { CartRedisService } from "../../domain/service/cart_redis.service";
 
 export class AddToCartCommand {
   constructor(
@@ -13,11 +12,7 @@ export class AddToCartHandler {
   private readonly cartService: CartService = new CartService();
 
   async execute(command: AddToCartCommand): Promise<void> {
-    await this.cartService.addToCart(
-      command.userId,
-      command.productId,
-      command.quantity
-    );
+    await this.cartService.addToCart(command.userId, command.productId, command.quantity);
   }
 }
 
@@ -37,7 +32,9 @@ export class UpdateCartHandler {
 }
 
 export class RemoveFromCartCommand {
-  constructor(public readonly cartId: number) {}
+  constructor(
+    public readonly cartId: number
+  ) {}
 }
 
 export class RemoveFromCartHandler {
@@ -48,13 +45,4 @@ export class RemoveFromCartHandler {
   }
 }
 
-export class GetCartCommand {
-  constructor(public readonly userId: number) {}
-}
-export class GetCartHandler {
-  private readonly cartRedisService: CartRedisService = new CartRedisService();
 
-  async execute(command: GetCartCommand): Promise<any[]> {
-    return await this.cartRedisService.getCart(command.userId);
-  }
-}
