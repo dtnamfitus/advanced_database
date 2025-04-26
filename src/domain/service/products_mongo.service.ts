@@ -5,6 +5,7 @@ import { ProductEvent } from "../../infrastructure/kafka/payload/products.payloa
 export interface IProductMongoService {
   SyncProducts(parsedMessage: ProductEvent): Promise<void>;
   GetProducts(
+    keyword: string,
     page: number,
     limit: number,
     filters?: Record<string, any>,
@@ -23,6 +24,7 @@ export class ProductMongoService implements IProductMongoService {
     try {
       switch (parsedMessage.op) {
         case "c":
+          console.log("Creating product with ID:", parsedMessage.after.id);
           await this.productMongoRepository.upsertProduct({
             product_id: parsedMessage.after.id,
             name: parsedMessage.after.name,
@@ -68,13 +70,15 @@ export class ProductMongoService implements IProductMongoService {
   }
 
   public async GetProducts(
+    keyword: string,
     page: number,
     limit: number,
     filters: Record<string, any> = {},
     sort: Record<string, 1 | -1 | "asc" | "desc"> = { created_at: -1 }
   ): Promise<any> {
     try {
-      const products = await this.productMongoRepository.getAllProducts(
+      const products = await this.productMongoRepository.searchProducts(
+        keyword,
         page,
         limit,
         filters,

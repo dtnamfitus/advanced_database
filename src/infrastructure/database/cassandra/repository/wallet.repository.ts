@@ -1,7 +1,7 @@
 import cassandraClient from "../connection";
 import { Wallet } from "../model/wallet.model";
 
-export class WalletsRepository {
+export class WalletsCassandraRepository {
   async insert(wallet: Wallet): Promise<void> {
     const query = `INSERT INTO shop_db.wallets (id, shop_id, balance, created_at, updated_at)
                    VALUES (?, ?, ?, ?, ?)`;

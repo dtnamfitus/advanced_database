@@ -140,6 +140,7 @@ export class ProductsController {
   async get(req: Request, res: Response): Promise<void> {
     try {
       const command = new GetProductCommand(
+        req.query.keyword ? (req.query.keyword as string) : "",
         req.query.page ? parseInt(req.query.page as string) : 1,
         req.query.limit ? parseInt(req.query.limit as string) : 10,
         req.query.sort ? JSON.parse(req.query.sort as string) : { id: -1 }

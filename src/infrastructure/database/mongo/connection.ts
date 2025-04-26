@@ -23,7 +23,7 @@ class MongoConnection {
     try {
       const { host, port, dbName } = config.mongo;
       const uri = `mongodb://${host}:${port}/${dbName}`;
-
+      console.log("Connecting to MongoDB at:", uri);
       await mongoose.connect(uri);
 
       this.isConnected = true;

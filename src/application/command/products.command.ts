@@ -58,6 +58,7 @@ export class DeleteProductHandler
 
 export class GetProductCommand implements ICommand {
   constructor(
+    public readonly keyword: string,
     public readonly page: number,
     public readonly limit: number,
     public readonly sort: Record<string, 1 | -1 | "asc" | "desc">
@@ -69,6 +70,7 @@ export class GetProductHandler implements ICommandHandler<GetProductCommand> {
 
   async execute(command: GetProductCommand): Promise<any> {
     return this.productMongoService.GetProducts(
+      command.keyword,
       command.page,
       command.limit,
       command.sort

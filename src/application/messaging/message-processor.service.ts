@@ -1,8 +1,11 @@
 import { config } from "../../config/config";
 import { CartRedisService } from "../../domain/service/cart_redis.service";
+import { OrderCassandraService } from "../../domain/service/order_cassandra";
+import { OrderItemsCassandraService } from "../../domain/service/order_items_cassandra";
 import { ProductMongoService } from "../../domain/service/products_mongo.service";
 import { ReviewMongoService } from "../../domain/service/review_mongo.service";
 import { CartKafkaMessage } from "../../infrastructure/kafka/payload/carts.payload";
+import { OrderItemKafkaMessage } from "../../infrastructure/kafka/payload/order_item.payload";
 import { OrderKafkaMessage } from "../../infrastructure/kafka/payload/orders.payload";
 import { ProductKafkaMessage } from "../../infrastructure/kafka/payload/products.payload";
 import { ReviewKafkaMessage } from "../../infrastructure/kafka/payload/reviews.payload";
@@ -12,6 +15,8 @@ export class MessageProcessorService implements IMessageProcessor {
   private productMongoService: ProductMongoService;
   private cartRedisService: CartRedisService;
   private reviewMongoService: ReviewMongoService;
+  private orderCassandraService: OrderCassandraService;
+  private orderItemsCassandraService: OrderItemsCassandraService;
 
   private topicHandlers: Map<string, (payload: any) => Promise<void>> =
     new Map();
@@ -20,6 +25,8 @@ export class MessageProcessorService implements IMessageProcessor {
     this.productMongoService = new ProductMongoService();
     this.cartRedisService = new CartRedisService();
     this.reviewMongoService = new ReviewMongoService();
+    this.orderCassandraService = new OrderCassandraService();
+    this.orderItemsCassandraService = new OrderItemsCassandraService();
 
     this.registerHandler(
       config.cdc_topic.cdc_products,
@@ -49,7 +56,15 @@ export class MessageProcessorService implements IMessageProcessor {
       config.cdc_topic.cdc_orders,
       async (data: OrderKafkaMessage) => {
         const orderEvent = data.payload;
-        console.log("Order event received:", orderEvent);
+        await this.orderCassandraService.SyncOrders(orderEvent);
+      }
+    );
+
+    this.registerHandler(
+      config.cdc_topic.cdc_order_items,
+      async (data: OrderItemKafkaMessage) => {
+        const orderItemEvent = data.payload;
+        await this.orderItemsCassandraService.SyncOrderItems(orderItemEvent);
       }
     );
   }

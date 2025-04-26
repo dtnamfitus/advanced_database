@@ -14,7 +14,7 @@ export class ReviewMongoService {
     page: number,
     limit: number,
     sort: Record<string, 1 | -1 | "asc" | "desc"> = { created_at: -1 }
-  ): Promise<ReviewPaginateResult> {
+  ): Promise<any> {
     try {
       const reviews = await this.reviewMongoRepository.getAll(
         page,

@@ -31,9 +31,7 @@ export class GetReviewByProductIdCommand implements ICommand {
 export class GetReviewByProductIdHandler {
   private readonly reviewMongoService: ReviewMongoService =
     new ReviewMongoService();
-  public async execute(
-    command: GetReviewByProductIdCommand
-  ): Promise<ReviewPaginateResult> {
+  public async execute(command: GetReviewByProductIdCommand): Promise<any> {
     return this.reviewMongoService.getReviewByProductId(
       command.product_id,
       command.page,

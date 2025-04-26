@@ -182,34 +182,3 @@ curl --location 'http://localhost:8083/connectors' \
       "max_lifetime": "3600"
     }
   }'
-
-curl --location 'http://localhost:8083/connectors' \
---header 'Content-Type: application/json' \
---data '{
-  "name": "mysql-order-items-connector",
-  "config": {
-    "connector.class": "io.debezium.connector.mysql.MySqlConnector",
-    "tasks.max": "1",
-    "database.hostname": "mysql",
-    "database.port": "3306",
-    "database.user": "root",
-    "database.password": "root",
-    "database.server.id": "184054",
-    "database.server.name": "product_database",
-    "database.include.list": "shoppee",
-    "table.include.list": "shoppee.order_items",
-    "database.history.kafka.bootstrap.servers": "kafka:29092",
-    "database.history.kafka.topic": "dbhistory.order_items",
-    "schema.history.internal.kafka.topic": "schemahistory.order_items",
-    "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
-    "include.schema.changes": "false",
-    "topic.prefix": "mckay",
-    "database.parse_time": "true",
-    "database.charset": "utf8mb4",
-    "database.serverTimezone": "UTC",
-    "max_idle_conns": "10",
-    "max_open_conns": "100",
-    "max_lifetime": "3600"
-  }
-}
-'

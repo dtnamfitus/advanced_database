@@ -58,7 +58,11 @@ mongoConnection
           );
         })
         .catch((error) => {
-          console.error("Error connecting Kafka consumer:", error);
+          console.error(
+            "Error connecting Kafka consumer:",
+            topicsToConsume,
+            error
+          );
         });
       console.log(`Server is running on port ${port}`);
     });

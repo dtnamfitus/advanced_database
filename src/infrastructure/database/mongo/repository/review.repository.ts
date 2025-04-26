@@ -10,22 +10,44 @@ export class ReviewsMongoRepository {
     limit: number = 10,
     filters: Record<string, any> = {},
     sort: Record<string, 1 | -1 | "asc" | "desc"> = { created_at: -1 }
-  ): Promise<ReviewPaginateResult> {
-    const options: PaginateOptions = {
-      page,
-      limit,
-      sort,
-      lean: true,
-      customLabels: {
-        docs: "reviews",
-        totalDocs: "totalReviews",
-      },
-    };
+  ): Promise<any> {
+    try {
+      page = Math.max(1, page);
+      limit = Math.max(1, Math.min(limit, 100));
 
-    return (await ReviewModel.paginate(
-      filters,
-      options
-    )) as unknown as ReviewPaginateResult;
+      const skip = (page - 1) * limit;
+
+      const [reviews, totalReviews] = await Promise.all([
+        ReviewModel.find(filters)
+          .sort(sort)
+          .skip(skip)
+          .limit(limit)
+          .lean()
+          .exec(),
+
+        ReviewModel.countDocuments(filters),
+      ]);
+
+      const totalPages = Math.ceil(totalReviews / limit);
+      const hasPrevPage = page > 1;
+      const hasNextPage = page < totalPages;
+
+      return {
+        reviews,
+        totalReviews,
+        limit,
+        page,
+        totalPages,
+        pagingCounter: (page - 1) * limit + 1,
+        hasPrevPage,
+        hasNextPage,
+        prevPage: hasPrevPage ? page - 1 : null,
+        nextPage: hasNextPage ? page + 1 : null,
+      };
+    } catch (error) {
+      console.error("Error in getAll:", error);
+      throw error;
+    }
   }
 
   async upsert(
@@ -49,6 +71,7 @@ export class ReviewsMongoRepository {
       if (!result) {
         throw new Error(`Failed to upsert product with id ${review.review_id}`);
       }
+      console.log("Upserted review:", result);
       return result;
     } catch (error) {
       console.error("Error upserting review:", error);

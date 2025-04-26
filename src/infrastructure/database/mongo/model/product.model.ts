@@ -60,4 +60,24 @@ const ProductModel = mongoose.model<
   ProductModel<IProductDocument>
 >("Product", ProductSchema);
 
+async function ensureTextIndex() {
+  try {
+    const indexExists = await ProductModel.collection.indexExists(
+      "name_text_description_text"
+    );
+    if (!indexExists) {
+      await ProductModel.createIndexes();
+      console.log("Text index created");
+    }
+  } catch (error) {
+    console.error("Error creating text index:", error);
+  }
+}
+ensureTextIndex()
+  .then(() => {
+    console.log("Text index ensured");
+  })
+  .catch((error) => {
+    console.error("Error ensuring text index:", error);
+  });
 export default ProductModel;

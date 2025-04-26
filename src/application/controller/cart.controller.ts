@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import {
   AddToCartCommand,
   AddToCartHandler,
+  GetCartCommand,
+  GetCartHandler,
   RemoveFromCartCommand,
   RemoveFromCartHandler,
   UpdateCartCommand,
@@ -24,6 +26,7 @@ export class CartsController {
       "RemoveFromCartCommand",
       new RemoveFromCartHandler()
     );
+    this.commandBus.register("GetCartCommand", new GetCartHandler());
   }
 
   async addToCart(req: Request, res: Response): Promise<void> {
@@ -48,6 +51,13 @@ export class CartsController {
 
   async removeFromCart(req: Request, res: Response): Promise<void> {
     const command = new RemoveFromCartCommand(parseInt(req.params.id));
+    const result = await this.commandBus.execute(command);
+    res.status(200).json(result);
+  }
+
+  async getCart(req: Request, res: Response): Promise<void> {
+    const userId = (req as any).user.id;
+    const command = new GetCartCommand(userId);
     const result = await this.commandBus.execute(command);
     res.status(200).json(result);
   }

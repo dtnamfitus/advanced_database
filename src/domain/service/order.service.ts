@@ -24,8 +24,10 @@ export class OrderService {
     try {
       const carts = await this.cartRedisService.getCart(user_id);
       if (!carts || carts.length === 0) {
+        console.error("Cart not found for user:", user_id);
         throw new Error("Cart not found for user: " + user_id);
       }
+      console.log("Carts found for user:", user_id, carts);
       const productIds = carts.map((item: CartRedisModel) => item.product_id);
       const orderItems = carts.map((item: CartRedisModel) => ({
         product_id: item.product_id,
@@ -52,11 +54,6 @@ export class OrderService {
           })
         );
       }
-      const removeCartsFunc = [];
-      for (const item of carts) {
-        removeCartsFunc.push(this.cartService.removeFromCart(item.id));
-      }
-      await Promise.all(removeCartsFunc);
       await Promise.all(createOrderFunc);
       return order;
     } catch (error) {

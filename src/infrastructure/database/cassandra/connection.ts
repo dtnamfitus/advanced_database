@@ -10,49 +10,52 @@ async function init() {
   await cassandraClient.execute(`USE shop_db`);
 
   await cassandraClient.execute(`
-      CREATE TABLE IF NOT EXISTS orders (
-        id UUID PRIMARY KEY,
-        user_id UUID,
-        total_amount decimal,
-        status text,
-        created_at timestamp,
-        updated_at timestamp
-      );
-    `);
+    CREATE TABLE IF NOT EXISTS shop_db.orders (
+      order_id bigint PRIMARY KEY,
+      user_id bigint,
+      total_amount decimal,
+      status text,
+      created_at timestamp,
+      updated_at timestamp
+    );
+  `);
 
   await cassandraClient.execute(`
-      CREATE TABLE IF NOT EXISTS order_items (
-        id UUID PRIMARY KEY,
-        order_id UUID,
-        product_id UUID,
+    CREATE TABLE IF NOT EXISTS shop_db.order_items (
+        id uuid PRIMARY KEY,
+        order_item_id bigint,
+        order_id bigint,
+        product_id bigint,
         quantity int,
         price_at_order decimal,
         created_at timestamp,
         updated_at timestamp
-      );
+        );
     `);
 
-  await cassandraClient.execute(`
-      CREATE TABLE IF NOT EXISTS wallets (
-        id UUID PRIMARY KEY,
-        shop_id UUID,
-        balance decimal,
-        created_at timestamp,
-        updated_at timestamp
-      );
-    `);
+  //   await cassandraClient.execute(`
+  //       CREATE TABLE IF NOT EXISTS shop_db.wallets (
+  //         id UUID PRIMARY KEY,
+  //         shop_id UUID,
+  //         balance decimal,
+  //         created_at timestamp,
+  //         updated_at timestamp
+  //       )
+  //     `);
 
-  await cassandraClient.execute(`
-      CREATE TABLE IF NOT EXISTS wallet_transactions (
-        id UUID PRIMARY KEY,
-        wallet_id UUID,
-        type text,
-        amount decimal,
-        description text,
-        created_at timestamp,
-        updated_at timestamp
-      );
-    `);
+  //   await cassandraClient.execute(`
+  //       CREATE TABLE IF NOT EXISTS shop_db.wallet_transactions (
+  //         id UUID PRIMARY KEY,
+  //         wallet_id UUID,
+  //         type text,
+  //         amount decimal,
+  //         description text,
+  //         created_at timestamp,
+  //         updated_at timestamp
+  //       )
+  //     `);
+
+  console.log("Cassandra database initialized and tables created.");
 }
 
 const cassandraClient = new Client({

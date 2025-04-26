@@ -13,19 +13,19 @@ import { UserTiersModel } from "./model/user_tiers.model";
 import { CartsModel } from "./model/cart.model";
 import { ReviewsModel } from "./model/review.model";
 import mysql from "mysql2/promise";
-// async function ensureDatabaseExists() {
-//   const connection = await mysql.createConnection({
-//     host: config.mysql.host,
-//     port: config.mysql.port,
-//     user: config.mysql.user,
-//     password: config.mysql.password,
-//   });
+async function ensureDatabaseExists() {
+  const connection = await mysql.createConnection({
+    host: config.mysql.host,
+    port: config.mysql.port,
+    user: config.mysql.user,
+    password: config.mysql.password,
+  });
 
-//   await connection.query(
-//     `CREATE DATABASE IF NOT EXISTS \`${config.mysql.database}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`
-//   );
-//   await connection.end();
-// }
+  await connection.query(
+    `CREATE DATABASE IF NOT EXISTS \`${config.mysql.database}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`
+  );
+  await connection.end();
+}
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -56,15 +56,13 @@ export const AppDataSource = new DataSource({
   migrations: [__dirname + "/migration/*.ts"],
 });
 
-AppDataSource.initialize();
-
-// ensureDatabaseExists()
-//   .then(() => {
-//     return AppDataSource.initialize();
-//   })
-//   .then(() => {
-//     console.log("Data Source has been initialized!");
-//   })
-//   .catch((err) => {
-//     console.error("Error during Data Source initialization", err);
-//   });
+ensureDatabaseExists()
+  .then(() => {
+    return AppDataSource.initialize();
+  })
+  .then(() => {
+    console.log("Data Source has been initialized!");
+  })
+  .catch((err) => {
+    console.error("Error during Data Source initialization", err);
+  });

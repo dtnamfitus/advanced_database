@@ -1,10 +1,12 @@
 import { OrderItemsRepository } from "../../infrastructure/database/mysql/repository/order_items.repository";
+import { ProductsRepository } from "../../infrastructure/database/mysql/repository/products.repository";
 
 export class OrderItemService {
   private readonly orderItemRepository;
-
+  private readonly productRepository;
   constructor() {
     this.orderItemRepository = new OrderItemsRepository();
+    this.productRepository = new ProductsRepository();
   }
 
   async createOrderItem(orderItemData: {
@@ -13,7 +15,17 @@ export class OrderItemService {
     quantity: number;
   }): Promise<any> {
     try {
-      return await this.orderItemRepository.create(orderItemData);
+      const product = await this.productRepository.findById(
+        orderItemData.product_id
+      );
+      if (!product) {
+        throw new Error("Product not found");
+      }
+      const price_at_order = product.price * orderItemData.quantity;
+      return await this.orderItemRepository.create({
+        price_at_order,
+        ...orderItemData,
+      });
     } catch (error) {
       throw new Error("Failed to create order item: " + error);
     }

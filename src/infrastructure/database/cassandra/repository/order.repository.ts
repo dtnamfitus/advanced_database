@@ -1,14 +1,14 @@
 import cassandraClient from "../connection";
 import { Order } from "../model/order.model";
 
-export class OrdersRepository {
+export class OrdersCassandraRepository {
   async insert(order: Order): Promise<void> {
-    const query = `INSERT INTO shop_db.orders (id, user_id, total_amount, status, created_at, updated_at)
+    const query = `INSERT INTO shop_db.orders (order_id, user_id, total_amount, status, created_at, updated_at)
                    VALUES (?, ?, ?, ?, ?, ?)`;
     await cassandraClient.execute(
       query,
       [
-        order.id,
+        order.order_id,
         order.user_id,
         order.total_amount,
         order.status,
@@ -28,7 +28,7 @@ export class OrdersRepository {
     if (result.rows[0]) {
       const row = result.rows[0];
       return {
-        id: row["id"],
+        order_id: row["order_id"],
         user_id: row["user_id"],
         total_amount: row["total_amount"],
         status: row["status"],
@@ -39,10 +39,9 @@ export class OrdersRepository {
     return null;
   }
 
-  async getByUserId(user_id: string): Promise<Order[]> {
-    // Cassandra không hỗ trợ tốt WHERE với non-primary key nếu không có index.
+  async getByUserId(user_id: number): Promise<Order[]> {
     const result = await cassandraClient.execute(
-      `SELECT * FROM shop_db.orders_by_user WHERE user_id = ?`,
+      `SELECT * FROM shop_db.orders WHERE user_id = ? ALLOW FILTERING;`,
       [user_id],
       { prepare: true }
     );
@@ -50,7 +49,7 @@ export class OrdersRepository {
     return result.rows.map(
       (row) =>
         ({
-          id: row["id"],
+          order_id: row["order_id"],
           user_id: row["user_id"],
           total_amount: row["total_amount"],
           status: row["status"],
@@ -68,6 +67,23 @@ export class OrdersRepository {
     await cassandraClient.execute(
       `UPDATE shop_db.orders SET status = ?, updated_at = ? WHERE id = ?`,
       [status, updatedAt, id],
+      { prepare: true }
+    );
+  }
+
+  async upsert(order: Order): Promise<void> {
+    const query = `INSERT INTO shop_db.orders (order_id, user_id, total_amount, status, created_at, updated_at)
+                   VALUES (?, ?, ?, ?, ?, ?)`;
+    await cassandraClient.execute(
+      query,
+      [
+        order.order_id,
+        order.user_id,
+        order.total_amount,
+        order.status,
+        order.created_at,
+        order.updated_at,
+      ],
       { prepare: true }
     );
   }

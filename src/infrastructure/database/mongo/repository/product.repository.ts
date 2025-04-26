@@ -1,31 +1,10 @@
-import { PaginateOptions } from "mongoose";
+import { PaginateOptions, PaginateResult } from "mongoose";
 import ProductModel, {
   IProduct,
   ProductPaginateResult,
 } from "../model/product.model";
 
-export interface IProductRepository {
-  getAllProducts(
-    page?: number,
-    limit?: number,
-    filters?: Record<string, any>,
-    sort?: Record<string, 1 | -1 | "asc" | "desc">
-  ): Promise<ProductPaginateResult>;
-  searchProducts(
-    keyword: string,
-    page?: number,
-    limit?: number,
-    filters?: Record<string, any>,
-    sort?: Record<string, 1 | -1 | "asc" | "desc" | { $meta: string }>
-  ): Promise<ProductPaginateResult>;
-  getProductById(id: string): Promise<IProduct | null>;
-  upsertProduct(
-    product: IProduct,
-    options?: { upsert: boolean }
-  ): Promise<IProduct>;
-}
-
-export class ProductMongoRepository implements IProductRepository {
+export class ProductMongoRepository {
   private convertBase64ToNumber(base64Value: string): number {
     try {
       const buffer = Buffer.from(base64Value, "base64");
@@ -42,7 +21,7 @@ export class ProductMongoRepository implements IProductRepository {
     limit: number = 10,
     filters: Record<string, any> = {},
     sort: Record<string, 1 | -1 | "asc" | "desc"> = { created_at: -1 }
-  ): Promise<ProductPaginateResult> {
+  ): Promise<any> {
     const options: PaginateOptions = {
       page,
       limit,
@@ -54,43 +33,43 @@ export class ProductMongoRepository implements IProductRepository {
       },
     };
 
-    return (await ProductModel.paginate(
-      filters,
-      options
-    )) as unknown as ProductPaginateResult;
+    return await ProductModel.paginate(filters, options);
   }
 
   async searchProducts(
     keyword: string,
     page: number = 1,
-    limit: number = 10,
+    perPage: number = 10,
     filters: Record<string, any> = {},
-    sort: Record<string, 1 | -1 | "asc" | "desc" | { $meta: string }> = {
-      score: { $meta: "textScore" },
+    sort: Record<string, 1 | -1 | "asc" | "desc"> = { created_at: -1 }
+  ): Promise<any> {
+    try {
+      const query: any = {};
+
+      if (keyword && keyword.trim()) {
+        query.$text = { $search: keyword };
+      }
+
+      const skip = (page - 1) * perPage;
+
+      const [products, total] = await Promise.all([
+        ProductModel.find(query).sort(sort).skip(skip).limit(perPage).lean(),
+        ProductModel.countDocuments(query),
+      ]);
+
+      const totalPages = Math.ceil(total / perPage);
+
+      return {
+        products,
+        total,
+        page,
+        perPage,
+        totalPages,
+      };
+    } catch (error) {
+      console.error("Search products error:", error);
+      throw error;
     }
-  ): Promise<ProductPaginateResult> {
-    const searchFilters = {
-      $text: { $search: keyword },
-      ...filters,
-    };
-
-    const options: PaginateOptions = {
-      page,
-      limit,
-      sort,
-      lean: true,
-      customLabels: {
-        docs: "products",
-        totalDocs: "totalProducts",
-      },
-
-      select: { score: { $meta: "textScore" } },
-    };
-
-    return (await ProductModel.paginate(
-      searchFilters,
-      options
-    )) as unknown as ProductPaginateResult;
   }
 
   async getProductById(id: string): Promise<IProduct | null> {
@@ -127,6 +106,6 @@ export class ProductMongoRepository implements IProductRepository {
       throw new Error(`Failed to upsert product with id ${product.product_id}`);
     }
 
-    return result;
+    return await result.save();
   }
 }

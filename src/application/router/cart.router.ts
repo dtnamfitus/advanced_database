@@ -5,6 +5,7 @@ import { authenticate } from "../middleware/auth.middleware";
 const router = Router();
 const cartsController = new CartsController();
 
+router.get("/", authenticate, (req, res) => cartsController.getCart(req, res));
 router.post("/", authenticate, (req, res) =>
   cartsController.addToCart(req, res)
 );
