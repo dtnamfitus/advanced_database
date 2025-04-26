@@ -14,7 +14,7 @@ export interface Product {
   shop_id: number;
   name: string;
   description?: string | null;
-  price: string;
+  price: number;
   stock: number;
   image_url?: string | null;
   created_at: number;

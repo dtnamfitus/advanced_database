@@ -2,6 +2,7 @@ import { config } from "../../config/config";
 import { CartRedisService } from "../../domain/service/cart_redis.service";
 import { OrderCassandraService } from "../../domain/service/order_cassandra";
 import { OrderItemsCassandraService } from "../../domain/service/order_items_cassandra";
+import { ProductNeo4jService } from "../../domain/service/product_neo4j.service";
 import { ProductMongoService } from "../../domain/service/products_mongo.service";
 import { ReviewMongoService } from "../../domain/service/review_mongo.service";
 import { CartKafkaMessage } from "../../infrastructure/kafka/payload/carts.payload";
@@ -17,7 +18,7 @@ export class MessageProcessorService implements IMessageProcessor {
   private reviewMongoService: ReviewMongoService;
   private orderCassandraService: OrderCassandraService;
   private orderItemsCassandraService: OrderItemsCassandraService;
-
+  private productNeo4jService: ProductNeo4jService;
   private topicHandlers: Map<string, (payload: any) => Promise<void>> =
     new Map();
 
@@ -27,12 +28,20 @@ export class MessageProcessorService implements IMessageProcessor {
     this.reviewMongoService = new ReviewMongoService();
     this.orderCassandraService = new OrderCassandraService();
     this.orderItemsCassandraService = new OrderItemsCassandraService();
+    this.productNeo4jService = new ProductNeo4jService();
 
     this.registerHandler(
       config.cdc_topic.cdc_products,
       async (data: ProductKafkaMessage) => {
         const productEvent = data.payload;
         await this.productMongoService.SyncProducts(productEvent);
+        await this.productNeo4jService.syncProducts({
+          id: productEvent.after.id,
+          name: productEvent.after.name,
+          price: productEvent.after.price,
+          stock: productEvent.after.stock,
+          shop_id: productEvent.after.shop_id,
+        });
       }
     );
 

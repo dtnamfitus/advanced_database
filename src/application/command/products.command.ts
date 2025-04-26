@@ -1,3 +1,4 @@
+import { ProductNeo4jService } from "../../domain/service/product_neo4j.service";
 import { ProductService } from "../../domain/service/products.service";
 import { ProductMongoService } from "../../domain/service/products_mongo.service";
 import { ICommand, ICommandHandler } from "./command_bus";
@@ -75,5 +76,19 @@ export class GetProductHandler implements ICommandHandler<GetProductCommand> {
       command.limit,
       command.sort
     );
+  }
+}
+
+export class GetProductRecommendationCommand implements ICommand {
+  constructor(public readonly user_id: number) {}
+}
+
+export class GetProductRecommendationHandler
+  implements ICommandHandler<GetProductRecommendationCommand>
+{
+  private productNeo4jService = new ProductNeo4jService();
+
+  async execute(command: GetProductRecommendationCommand): Promise<any> {
+    return this.productNeo4jService.getProductByUserId(command.user_id);
   }
 }

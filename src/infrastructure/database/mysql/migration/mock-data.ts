@@ -231,4 +231,4 @@ async function generateRandomReviewData() {
   }
 }
 
-// runMockData();
+runMockData();

@@ -1,9 +1,13 @@
 import neo4j, { Driver, Session } from "neo4j-driver";
+import { config } from "../../../../config/config";
 
 export class Neo4jRepository {
   private driver: Driver;
 
-  constructor(uri: string, user: string, password: string) {
+  constructor() {
+    const uri = config.neo4j.host;
+    const user = config.neo4j.username;
+    const password = config.neo4j.password;
     this.driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
   }
 

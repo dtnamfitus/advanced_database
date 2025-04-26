@@ -6,6 +6,8 @@ import {
   DeleteProductHandler,
   GetProductCommand,
   GetProductHandler,
+  GetProductRecommendationCommand,
+  GetProductRecommendationHandler,
   UpdateProductCommand,
   UpdateProductHandler,
   UpdateStockCommand,
@@ -36,6 +38,10 @@ export class ProductsController {
       new DeleteProductHandler()
     );
     this.commandBus.register("GetProductCommand", new GetProductHandler());
+    this.commandBus.register(
+      "GetProductRecommendationCommand",
+      new GetProductRecommendationHandler()
+    );
   }
 
   async create(req: Request, res: Response): Promise<void> {
@@ -155,6 +161,24 @@ export class ProductsController {
       res.status(400).json({
         success: false,
         message: error.message || "Failed to retrieve products",
+      });
+    }
+  }
+
+  async getRecommendation(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = (req as any).user.id;
+      const command = new GetProductRecommendationCommand(userId);
+      const recommendations = await this.commandBus.execute(command);
+      res.status(200).json({
+        success: true,
+        data: recommendations,
+        message: "Recommendations retrieved successfully",
+      });
+    } catch (error: any) {
+      res.status(400).json({
+        success: false,
+        message: error.message || "Failed to retrieve recommendations",
       });
     }
   }
